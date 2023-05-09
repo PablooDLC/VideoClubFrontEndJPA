@@ -36,7 +36,7 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.textfield.TextField;
 
-@Route(value = "listado-pelicula",layout = AdminView.class)
+@Route(value = "listado-peliculas", layout = AdminView.class)
 public class AdminPeliculasView extends Div {
 
 	List<Pelicula> coleccionPeliculas = new ArrayList<Pelicula>();
@@ -77,6 +77,7 @@ public class AdminPeliculasView extends Div {
 			eliminarBoton.setIcon(new Icon(VaadinIcon.TRASH));
 
 		})).setHeader("Eliminar");
+		
 		grid.addColumn(new ComponentRenderer<>(Button::new, (editarBoton, pelicula) -> {
 
 			Equipo actor = new Equipo();
@@ -150,8 +151,8 @@ public class AdminPeliculasView extends Div {
 			editarBoton.setIcon(new Icon(VaadinIcon.EDIT));
 
 		})).setHeader("Modificar");
-		
-		coleccionPeliculas = PeliculaDao.ObtenerPelicula();
+
+		// coleccionPeliculas = PeliculaDao.ObtenerPelicula();
 
 		TextField tituloField = new TextField("Título");
 		TextField descripcionField = new TextField("Descripcion");
@@ -210,7 +211,7 @@ public class AdminPeliculasView extends Div {
 			Pelicula pelicula = new Pelicula(tituloField.getValue(), descripcionField.getValue(),
 					anyoPublicacionField.getValue(), duracionField.getValue(), categoriaField.getValue(),
 					formatoField.getValue(), valoracionField.getValue());
-			
+
 			Set<Equipo> actoresSeleccionados = relActor.getSelectedItems();
 			pelicula.setActores(actoresSeleccionados);
 
@@ -234,6 +235,8 @@ public class AdminPeliculasView extends Div {
 
 			grid.getDataProvider().refreshAll();
 			grid.setItems(coleccionPeliculas);
+			
+			UI.getCurrent().getPage().reload();
 
 		});
 
