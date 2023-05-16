@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7261c0c-83b7-4171-be1a-9435ab57567f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/actores.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/directores.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/pelicula_actor.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/pelicula_director.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/peliculas.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminAlquileresView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminAlquileresView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminEquipoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminEquipoView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminPeliculasView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminPeliculasView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminView.java" afterDir="false" />
+    <list default="true" id="f7261c0c-83b7-4171-be1a-9435ab57567f" name="Changes" comment="Actualizacion de todas las vistas&#10;Login hecho">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/ClienteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/ClienteView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +14,48 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main" />
+              </list>
+            </value>
+          </entry>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="3faa84df-9455-4e08-9b44-6d8f9930bd81" />
+        <option name="url" value="https://github.com/PablooDLC/VideoClubFrontEndJPA.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2PhjiReeooLL0lDzgeF2fRObULH" />
   <component name="ProjectViewState">
@@ -31,7 +66,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Pablo/git/VideoClubBackEnd"
+    "TODO_SCOPE": "All Places",
+    "last_opened_file_path": "C:/Users/Pablo/git/VideoClubFrontEndJPA"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -43,6 +79,36 @@
       <option name="presentableId" value="Default" />
       <updated>1683916334739</updated>
     </task>
+    <task id="LOCAL-00001" summary="Actualizacion de todas las vistas&#10;Login hecho">
+      <created>1684244469900</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684244469900</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Actualizacion de todas las vistas&#10;Login hecho">
+      <created>1684244633564</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1684244633564</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Actualizacion de todas las vistas&#10;Login hecho" />
+    <option name="LAST_COMMIT_MESSAGE" value="Actualizacion de todas las vistas&#10;Login hecho" />
   </component>
 </project>
