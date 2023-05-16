@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f7261c0c-83b7-4171-be1a-9435ab57567f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/actores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/directores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/pelicula_actor.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/pelicula_director.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/peliculas.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminAlquileresView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminAlquileresView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminEquipoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminEquipoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminPeliculasView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminPeliculasView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminView.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2PhjiReeooLL0lDzgeF2fRObULH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/Pablo/git/VideoClubBackEnd"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f7261c0c-83b7-4171-be1a-9435ab57567f" name="Changes" comment="" />
+      <created>1683916334739</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1683916334739</updated>
+    </task>
+    <servers />
+  </component>
+</project>
