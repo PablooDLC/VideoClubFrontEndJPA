@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.ieschabas.clases.Equipo;
 import org.ieschabas.clases.Pelicula;
 import org.ieschabas.daos.EquipoDao;
@@ -37,18 +39,118 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.textfield.TextField;
 
 @Route(value = "listado-peliculas", layout = AdminView.class)
-public class AdminPeliculasView extends Div {
+@RolesAllowed("ROLE_ADMIN")
+public class AdminPeliculasView extends VerticalLayout {
 
 	List<Pelicula> coleccionPeliculas = new ArrayList<Pelicula>();
 	Pelicula peliculaSeleccionada;
 	String actor = "Actor";
 	String director = "Director";
+	Grid<Pelicula> grid = new Grid<>(Pelicula.class, false);
+	FormLayout formLayout = new FormLayout();
 
-	public AdminPeliculasView() throws NumberFormatException, IOException {
+	public AdminPeliculasView() {
 
-		coleccionPeliculas = PeliculaDao.ObtenerPelicula();
+		coleccionPeliculas = PeliculaDao.obtenerPelicula();
 
-		Grid<Pelicula> grid = new Grid<>(Pelicula.class, false);
+		iniciarGrid();
+		iniciarFormulario();
+
+		add(grid, formLayout);
+
+	}
+
+	private void iniciarFormulario() {
+
+		TextField tituloField = new TextField("Título");
+		TextField descripcionField = new TextField("Descripcion");
+		IntegerField anyoPublicacionField = new IntegerField("Año de publicacion");
+		TextField duracionField = new TextField("Duracion");
+		Select<Categoria> categoriaField = new Select<>();
+		categoriaField.setLabel("Categoria");
+		categoriaField.setItems(Categoria.values());
+		Select<Formato> formatoField = new Select<>();
+		formatoField.setLabel("Formato");
+		formatoField.setItems(Formato.values());
+		Select<Valoracion> valoracionField = new Select<>();
+		valoracionField.setLabel("Valoracion");
+		valoracionField.setItems(Valoracion.values());
+		MultiSelectComboBox<Equipo> relActor = new MultiSelectComboBox<>("Actores");
+		List<Equipo> actoresL = EquipoDao.obtenerActor(actor);
+		relActor.setItems(actoresL);
+		relActor.setItemLabelGenerator(Equipo::getNombre);
+		TextArea actoresSelec = new TextArea("Actores seleccionados");
+		actoresSelec.setReadOnly(true);
+
+		relActor.addValueChangeListener(e -> {
+			String actoresSelecText = e.getValue().stream().map(Equipo::getNombre).collect(Collectors.joining(", "));
+
+			actoresSelec.setValue(actoresSelecText);
+
+		});
+		MultiSelectComboBox<Equipo> relDirector = new MultiSelectComboBox<>("Directores");
+		List<Equipo> directoresL = EquipoDao.obtenerDirector(director);
+		relDirector.setItems(directoresL);
+		relDirector.setItemLabelGenerator(Equipo::getNombre);
+		TextArea directoresSelec = new TextArea("Directores seleccionados");
+		directoresSelec.setReadOnly(true);
+
+		relDirector.addValueChangeListener(e -> {
+			String directoresSelecText = e.getValue().stream().map(Equipo::getNombre).collect(Collectors.joining(", "));
+
+			directoresSelec.setValue(directoresSelecText);
+
+		});
+
+		formLayout.setResponsiveSteps(
+				// Use one column by default
+				new ResponsiveStep("0", 1),
+				// Use two columns, if layout's width exceeds 500px
+				new ResponsiveStep("500px", 2));
+
+		Button añadir = new Button("Añadir");
+		añadir.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+		añadir.addClickListener(e -> {
+
+			Pelicula pelicula = new Pelicula(tituloField.getValue(), descripcionField.getValue(),
+					anyoPublicacionField.getValue(), duracionField.getValue(), categoriaField.getValue(),
+					formatoField.getValue(), valoracionField.getValue());
+
+			Set<Equipo> actoresSeleccionados = relActor.getSelectedItems();
+			pelicula.setActores(actoresSeleccionados);
+
+			Set<Equipo> directoresSeleccionados = relDirector.getSelectedItems();
+			pelicula.setDirectores(directoresSeleccionados);
+
+			PeliculaDao.guardarPelicula(pelicula);
+
+			Notification popup = Notification.show("Pelicula añadida correctamente");
+			popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+
+			tituloField.clear();
+			descripcionField.clear();
+			anyoPublicacionField.clear();
+			duracionField.clear();
+			categoriaField.clear();
+			formatoField.clear();
+			valoracionField.clear();
+			relActor.clear();
+			relDirector.clear();
+
+			grid.getDataProvider().refreshAll();
+			grid.setItems(coleccionPeliculas);
+
+			UI.getCurrent().getPage().reload();
+
+		});
+
+		formLayout.add(tituloField, descripcionField, anyoPublicacionField, duracionField, categoriaField, formatoField,
+				valoracionField, relActor, relDirector, añadir);
+	}
+
+	private void iniciarGrid() {
+
 		grid.setItems(coleccionPeliculas);
 		grid.addColumn(Pelicula::getId).setHeader("ID");
 		grid.addColumn(Pelicula::getTitulo).setHeader("Título");
@@ -77,10 +179,8 @@ public class AdminPeliculasView extends Div {
 			eliminarBoton.setIcon(new Icon(VaadinIcon.TRASH));
 
 		})).setHeader("Eliminar");
-		
-		grid.addColumn(new ComponentRenderer<>(Button::new, (editarBoton, pelicula) -> {
 
-			Equipo actor = new Equipo();
+		grid.addColumn(new ComponentRenderer<>(Button::new, (editarBoton, pelicula) -> {
 
 			editarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
 					ButtonVariant.LUMO_TERTIARY);
@@ -151,97 +251,6 @@ public class AdminPeliculasView extends Div {
 			editarBoton.setIcon(new Icon(VaadinIcon.EDIT));
 
 		})).setHeader("Modificar");
-
-		// coleccionPeliculas = PeliculaDao.ObtenerPelicula();
-
-		TextField tituloField = new TextField("Título");
-		TextField descripcionField = new TextField("Descripcion");
-		IntegerField anyoPublicacionField = new IntegerField("Año de publicacion");
-		TextField duracionField = new TextField("Duracion");
-		Select<Categoria> categoriaField = new Select<>();
-		categoriaField.setLabel("Categoria");
-		categoriaField.setItems(Categoria.values());
-		Select<Formato> formatoField = new Select<>();
-		formatoField.setLabel("Formato");
-		formatoField.setItems(Formato.values());
-		Select<Valoracion> valoracionField = new Select<>();
-		valoracionField.setLabel("Valoracion");
-		valoracionField.setItems(Valoracion.values());
-		MultiSelectComboBox<Equipo> relActor = new MultiSelectComboBox<>("Actores");
-		List<Equipo> actoresL = EquipoDao.ObtenerActor(actor);
-		relActor.setItems(actoresL);
-		relActor.setItemLabelGenerator(Equipo::getNombre);
-		TextArea actoresSelec = new TextArea("Actores seleccionados");
-		actoresSelec.setReadOnly(true);
-
-		relActor.addValueChangeListener(e -> {
-			String actoresSelecText = e.getValue().stream().map(Equipo::getNombre).collect(Collectors.joining(", "));
-
-			actoresSelec.setValue(actoresSelecText);
-
-		});
-		MultiSelectComboBox<Equipo> relDirector = new MultiSelectComboBox<>("Directores");
-		List<Equipo> directoresL = EquipoDao.ObtenerDirector(director);
-		relDirector.setItems(directoresL);
-		relDirector.setItemLabelGenerator(Equipo::getNombre);
-		TextArea directoresSelec = new TextArea("Directores seleccionados");
-		directoresSelec.setReadOnly(true);
-
-		relDirector.addValueChangeListener(e -> {
-			String directoresSelecText = e.getValue().stream().map(Equipo::getNombre).collect(Collectors.joining(", "));
-
-			directoresSelec.setValue(directoresSelecText);
-
-		});
-
-		FormLayout formLayout = new FormLayout();
-		formLayout.add(tituloField, descripcionField, anyoPublicacionField, duracionField, categoriaField, formatoField,
-				valoracionField, relActor, relDirector);
-		formLayout.setResponsiveSteps(
-				// Use one column by default
-				new ResponsiveStep("0", 1),
-				// Use two columns, if layout's width exceeds 500px
-				new ResponsiveStep("500px", 2));
-
-		Button añadir = new Button("Añadir");
-		añadir.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-		añadir.addClickListener(e -> {
-
-			Pelicula pelicula = new Pelicula(tituloField.getValue(), descripcionField.getValue(),
-					anyoPublicacionField.getValue(), duracionField.getValue(), categoriaField.getValue(),
-					formatoField.getValue(), valoracionField.getValue());
-
-			Set<Equipo> actoresSeleccionados = relActor.getSelectedItems();
-			pelicula.setActores(actoresSeleccionados);
-
-			Set<Equipo> directoresSeleccionados = relDirector.getSelectedItems();
-			pelicula.setDirectores(directoresSeleccionados);
-
-			PeliculaDao.guardarPelicula(pelicula);
-
-			Notification popup = Notification.show("Pelicula añadida correctamente");
-			popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-
-			tituloField.clear();
-			descripcionField.clear();
-			anyoPublicacionField.clear();
-			duracionField.clear();
-			categoriaField.clear();
-			formatoField.clear();
-			valoracionField.clear();
-			relActor.clear();
-			relDirector.clear();
-
-			grid.getDataProvider().refreshAll();
-			grid.setItems(coleccionPeliculas);
-			
-			UI.getCurrent().getPage().reload();
-
-		});
-
-		add(grid, formLayout, añadir);
-
 	}
 
 }

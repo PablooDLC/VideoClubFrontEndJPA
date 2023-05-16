@@ -1,7 +1,9 @@
-package org.ieschabas.application.views.main;
+	package org.ieschabas.application.views.main;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.security.RolesAllowed;
 
 import org.ieschabas.clases.Actor;
 import org.ieschabas.clases.Director;
@@ -26,23 +28,91 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "listado-equipo", layout = AdminView.class)
-public class AdminEquipoView extends Div {
+@RolesAllowed("ROLE_ADMIN")
+public class AdminEquipoView extends VerticalLayout implements HasUrlParameter<String> {
 
 	List<Equipo> coleccionEquipo = new ArrayList<Equipo>();
+	FormLayout formLayout = new FormLayout();
+	Grid<Equipo> grid = new Grid<>(Equipo.class, false);
 	Equipo equipoSeleccionado;
+	String rol;
 	
 	public AdminEquipoView() {
 		
-		coleccionEquipo = EquipoDao.ObtenerEquipo();
+		coleccionEquipo = EquipoDao.obtenerEquipo();
+
+	   iniciarGrid();
+	   iniciarFormulario();
+
+		add(grid, formLayout);
 		
-		Grid<Equipo> grid = new Grid<>(Equipo.class, false);
+		
+	}
+
+	
+	
+	private void iniciarFormulario() {
+
+		TextField nombreField = new TextField("Nombre");
+		TextField apellidosField = new TextField("Apellidos");
+		IntegerField añoField = new IntegerField("Año de nacimiento");
+		TextField paisField = new TextField("Pais");
+		
+		formLayout.setResponsiveSteps(
+				// Use one column by default
+				new ResponsiveStep("0", 1),
+				// Use two columns, if layout's width exceeds 500px
+				new ResponsiveStep("500px", 2));
+		
+		Button añadir = new Button("Añadir");
+		añadir.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+		añadir.addClickListener(e -> {
+
+			Equipo equipo = new Equipo();
+			if (nombreField != null && !nombreField.isEmpty() && rol != null && !rol.isEmpty()) {
+	            if (rol.equals("Actor")) {
+	                equipo = new Actor(nombreField.getValue(), apellidosField.getValue(),
+	    					añoField.getValue(), paisField.getValue());
+	            } else if (rol.equals("Director")) {
+	                equipo = new Director(nombreField.getValue(), apellidosField.getValue(),
+	    					añoField.getValue(), paisField.getValue());
+	            }
+	         }
+			
+			EquipoDao.guardarEquipo(equipo);
+
+			Notification popup = Notification.show("Añadido correctamente");
+			popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+
+			nombreField.clear();
+			apellidosField.clear();
+			añoField.clear();
+			paisField.clear();
+
+			grid.getDataProvider().refreshAll();
+			grid.setItems(coleccionEquipo);
+
+			UI.getCurrent().getPage().reload();
+		});
+
+		formLayout.add(nombreField, apellidosField, añoField, paisField, añadir);
+
+	}
+
+
+
+	private void iniciarGrid() {
 		grid.setItems(coleccionEquipo);
 		grid.addColumn(Equipo::getId).setHeader("ID");
 		grid.addColumn(Equipo::getNombre).setHeader("Nombre");
@@ -130,57 +200,22 @@ public class AdminEquipoView extends Div {
 
 		})).setHeader("Modificar");
 		
-		TextField nombreField = new TextField("Nombre");
-		TextField apellidosField = new TextField("Apellidos");
-		IntegerField añoField = new IntegerField("Año de nacimiento");
-		TextField paisField = new TextField("Pais");
-		ComboBox<String> rolField = new ComboBox<String>("Rol");
-		rolField.setItems("Actor", "Director");
+	}
+
+	@Override
+	public void setParameter(BeforeEvent event, String parameter) {
 		
-		FormLayout formLayout = new FormLayout();
-		formLayout.add(nombreField, apellidosField, añoField, paisField, rolField);
-		formLayout.setResponsiveSteps(
-				// Use one column by default
-				new ResponsiveStep("0", 1),
-				// Use two columns, if layout's width exceeds 500px
-				new ResponsiveStep("500px", 2));
+		this.rol = parameter;
+		this.removeAll();
+		if (parameter.equalsIgnoreCase("Actor")) {
+			coleccionEquipo = EquipoDao.obtenerActor(parameter);
+		} else if (parameter.equalsIgnoreCase("Director")) {
+			coleccionEquipo = EquipoDao.obtenerDirector(parameter);
+		}
 		
-		Button añadir = new Button("Añadir");
-		añadir.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-		añadir.addClickListener(e -> {
-
-			Equipo equipo = new Equipo(nombreField.getValue(), apellidosField.getValue(),
-					añoField.getValue(), paisField.getValue());
-			if (nombreField != null && !nombreField.isEmpty() && rolField != null && !rolField.isEmpty()) {
-	            if (rolField.equals("Actor")) {
-	                equipo = new Actor();
-	            } else if (rolField.equals("Director")) {
-	                equipo = new Director();
-	            }
-	         }
-			
-			EquipoDao.guardarEquipo(equipo);
-
-			Notification popup = Notification.show("Añadido correctamente");
-			popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-
-			nombreField.clear();
-			apellidosField.clear();
-			añoField.clear();
-			paisField.clear();
-			rolField.clear();
-
-			grid.getDataProvider().refreshAll();
-			grid.setItems(coleccionEquipo);
-
-			UI.getCurrent().getPage().reload();
-		});
-
-		
-
-		add(grid, formLayout, añadir);
-		
+		grid.getDataProvider().refreshAll();
+		grid.setItems(coleccionEquipo);
+		add(grid, formLayout);		
 		
 	}
 	

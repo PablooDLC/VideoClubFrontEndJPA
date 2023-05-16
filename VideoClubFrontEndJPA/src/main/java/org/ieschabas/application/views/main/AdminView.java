@@ -2,8 +2,12 @@ package org.ieschabas.application.views.main;
 
 import java.io.IOException;
 
+import javax.annotation.security.RolesAllowed;
+
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -11,9 +15,11 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteParameters;
 import com.vaadin.flow.router.RouterLink;
 
 @Route("admin-view")
+@RolesAllowed("ROLE_ADMIN")
 public class AdminView extends AppLayout {
 
 	public AdminView() throws NumberFormatException, IOException {
@@ -24,10 +30,18 @@ public class AdminView extends AppLayout {
 
 		Tabs tabs = getTabs();
 		
-	
+		AdminPeliculasView adminPeliculasView = new AdminPeliculasView();
 
+		Button logoutButton;
+		logoutButton = new Button("", event -> {
+			UI.getCurrent().getPage().executeJavaScript("location.href = '/login'");
+		});
+		logoutButton.getStyle().set("margin-left", "var(--lumo-space-s)");
+		logoutButton.setIcon(VaadinIcon.SIGN_OUT.create());
+
+		setContent(adminPeliculasView);
 		addToDrawer(tabs);
-		addToNavbar(toggle, title);
+		addToNavbar(toggle, title, logoutButton);
 	}
 
 	/**
@@ -37,8 +51,7 @@ public class AdminView extends AppLayout {
 	 */
 	private Tabs getTabs() {
 		Tabs tabs = new Tabs();
-		tabs.add(createTabP(VaadinIcon.BOOK, "Películas"), createTabA(VaadinIcon.USER_HEART, "Actores"),
-				createTabD(VaadinIcon.USER_HEART, "Directores"));
+		tabs.add(createTabP(VaadinIcon.BOOK, "Películas"), createTabD(VaadinIcon.USER_HEART, "Actores", "Actor"), createTabD(VaadinIcon.USER_HEART, "Directores", "Director"), createTabAlquiler(VaadinIcon.BOOK, "Alquileres"));
 		tabs.setOrientation(Tabs.Orientation.VERTICAL);
 		return tabs;
 	}
@@ -65,34 +78,13 @@ public class AdminView extends AppLayout {
 	}
 
 	/**
-	 * Este metodo crea en la opcion Actor la ruta hacia el adminview de actor
-	 * 
-	 * @param viewIcon
-	 * @param viewName
-	 * @return
-	 */
-	private Tab createTabA(VaadinIcon viewIcon, String viewName) {
-		Icon icon = viewIcon.create();
-		icon.getStyle().set("box-sizing", "border-box").set("margin-inline-end", "var(--lumo-space-m)")
-				.set("margin-inline-start", "var(--lumo-space-xs)").set("padding", "var(--lumo-space-xs)");
-
-		RouterLink link = new RouterLink();
-		link.add(icon, new Span(viewName));
-		// Demo has no routes
-		link.setRoute(AdminEquipoView.class);
-		link.setTabIndex(-1);
-
-		return new Tab(link);
-	}
-
-	/**
 	 * Este metodo crea en la opcion Director la ruta hacia el adminview de director
 	 * 
 	 * @param viewIcon
 	 * @param viewName
 	 * @return
 	 */
-	private Tab createTabD(VaadinIcon viewIcon, String viewName) {
+	private Tab createTabD(VaadinIcon viewIcon, String viewName, String rol) {
 		Icon icon = viewIcon.create();
 		icon.getStyle().set("box-sizing", "border-box").set("margin-inline-end", "var(--lumo-space-m)")
 				.set("margin-inline-start", "var(--lumo-space-xs)").set("padding", "var(--lumo-space-xs)");
@@ -100,7 +92,21 @@ public class AdminView extends AppLayout {
 		RouterLink link = new RouterLink();
 		link.add(icon, new Span(viewName));
 		// Demo has no routes
-		link.setRoute(AdminEquipoView.class);
+		link.setRoute(AdminEquipoView.class, rol);
+		link.setTabIndex(-1);
+
+		return new Tab(link);
+	}
+
+	private Tab createTabAlquiler(VaadinIcon viewIcon, String viewName) {
+		Icon icon = viewIcon.create();
+		icon.getStyle().set("box-sizing", "border-box").set("margin-inline-end", "var(--lumo-space-m)")
+				.set("margin-inline-start", "var(--lumo-space-xs)").set("padding", "var(--lumo-space-xs)");
+
+		RouterLink link = new RouterLink();
+		link.add(icon, new Span(viewName));
+		// Demo has no routes
+		link.setRoute(AdminAlquileresView.class);
 		link.setTabIndex(-1);
 
 		return new Tab(link);
