@@ -10,10 +10,7 @@ import javax.annotation.security.RolesAllowed;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.select.Select;
-import org.ieschabas.clases.Alquiler;
-import org.ieschabas.clases.Equipo;
-import org.ieschabas.clases.Pelicula;
-import org.ieschabas.clases.Usuario;
+import org.ieschabas.clases.*;
 import org.ieschabas.daos.AlquilerDao;
 import org.ieschabas.daos.EquipoDao;
 import org.ieschabas.daos.PeliculaDao;
@@ -43,48 +40,47 @@ import com.vaadin.flow.router.Route;
 @RolesAllowed("ROLE_ADMIN")
 public class AdminAlquileresView extends VerticalLayout {
 
-	List<Alquiler> coleccionAlquiler = new ArrayList<Alquiler>();
-	Alquiler alquilerSeleccionado;
+    List<Alquiler> coleccionAlquiler = new ArrayList<Alquiler>();
+    Alquiler alquilerSeleccionado;
     Grid<Alquiler> grid = new Grid<>(Alquiler.class, false);
     FormLayout formLayout = new FormLayout();
 
-	public AdminAlquileresView() {
+    Alquiler alquiler;
+    AlquilerId alquilerId;
+
+    public AdminAlquileresView() {
 
         coleccionAlquiler = AlquilerDao.obtenerAlquiler();
 
-		iniciarGrid();
-		
-		add(grid, formLayout);
+        iniciarGrid();
 
-	}
+        add(grid, formLayout);
+
+    }
 
     private void iniciarGrid() {
 
-		grid.setItems(coleccionAlquiler);
-		grid.addColumn(Alquiler::getIdCompuesta).setHeader("ID");
-		grid.addColumn(Alquiler::getIdAlquiler).setHeader("ID del alquiler");
-		grid.addColumn(Alquiler::getFechaRetorno).setHeader("Fecha de devolución");
-		grid.addColumn(new ComponentRenderer<>(Button::new, (eliminarBoton, alquiler) -> {
+        grid.setItems(coleccionAlquiler);
+        grid.addColumn(alquiler -> alquiler.getIdCompuesta().getIdCliente().getEmail()).setHeader("Cliente");
+        grid.addColumn(alquiler -> alquiler.getIdCompuesta().getIdPelicula().getTitulo()).setHeader("Pelicula");
+        grid.addColumn(alquiler -> alquiler.getIdCompuesta().getFechaAlquiler()).setHeader("Fecha de alquiler");
+        grid.addColumn(Alquiler::getFechaRetorno).setHeader("Fecha de devolución");
 
-        eliminarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
-                ButtonVariant.LUMO_TERTIARY);
+        grid.addColumn(new ComponentRenderer<>(Button::new, (eliminarBoton, alquiler) -> {
 
-        eliminarBoton.addClickListener(e -> {
+            eliminar(eliminarBoton, alquiler);
 
-            if (alquiler != null) {
-                AlquilerDao.eliminarAlquiler(alquiler);
-                UI.getCurrent().getPage().reload();
+        })).setHeader("Eliminar");
 
-                Notification popup = Notification.show("Alquiler eliminado correctamente");
-                popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-            }
-        });
+        grid.addColumn(new ComponentRenderer<>(Button::new, (editarBoton, alquiler) -> {
 
-        eliminarBoton.setIcon(new Icon(VaadinIcon.TRASH));
+            modificarForm(editarBoton, alquiler);
 
-    })).setHeader("Eliminar");
+        })).setHeader("Modificar");
 
-		grid.addColumn(new ComponentRenderer<>(Button::new, (editarBoton, alquiler) -> {
+    }
+
+    private void modificarForm(Button editarBoton, Alquiler alquiler) {
 
         editarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
                 ButtonVariant.LUMO_TERTIARY);
@@ -123,8 +119,25 @@ public class AdminAlquileresView extends VerticalLayout {
         });
 
         editarBoton.setIcon(new Icon(VaadinIcon.EDIT));
+    }
 
-    })).setHeader("Modificar");
+    private void eliminar(Button eliminarBoton, Alquiler alquiler) {
+
+        eliminarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
+                ButtonVariant.LUMO_TERTIARY);
+
+        eliminarBoton.addClickListener(e -> {
+
+            if (alquiler != null) {
+                AlquilerDao.eliminarAlquiler(alquiler);
+                UI.getCurrent().getPage().reload();
+
+                Notification popup = Notification.show("Alquiler eliminado correctamente");
+                popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+            }
+        });
+
+        eliminarBoton.setIcon(new Icon(VaadinIcon.TRASH));
 
     }
 }

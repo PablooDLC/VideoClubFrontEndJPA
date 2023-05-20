@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7261c0c-83b7-4171-be1a-9435ab57567f" name="Changes" comment="Actualizacion de todas las vistas&#10;Login hecho">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/ClienteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/ClienteView.java" afterDir="false" />
-    </list>
+    <list default="true" id="f7261c0c-83b7-4171-be1a-9435ab57567f" name="Changes" comment="Boton alquilar hecho" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,14 +59,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "TODO_SCOPE": "All Places",
-    "last_opened_file_path": "C:/Users/Pablo/git/VideoClubFrontEndJPA"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Pablo/git/VideoClubFrontEndJPA&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -93,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684244633564</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Boton alquilar hecho">
+      <created>1684260599160</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1684260599160</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -109,6 +113,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Actualizacion de todas las vistas&#10;Login hecho" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualizacion de todas las vistas&#10;Login hecho" />
+    <MESSAGE value="Boton alquilar hecho" />
+    <option name="LAST_COMMIT_MESSAGE" value="Boton alquilar hecho" />
   </component>
 </project>

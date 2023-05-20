@@ -122,84 +122,90 @@ public class AdminEquipoView extends VerticalLayout implements HasUrlParameter<S
 		grid.addColumn(Equipo::getRol).setHeader("Rol");
 		grid.addColumn(new ComponentRenderer<>(Button::new, (eliminarBoton, equipo) -> {
 
-			eliminarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
-					ButtonVariant.LUMO_TERTIARY);
-
-			eliminarBoton.addClickListener(e -> {
-
-				if (equipo != null) {
-					EquipoDao.eliminarEquipo(equipo);
-					UI.getCurrent().getPage().reload();
-
-					Notification popup = Notification.show("Eliminado correctamente");
-					popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-				}
-			});
-
-			eliminarBoton.setIcon(new Icon(VaadinIcon.TRASH));
+			eliminar(eliminarBoton, equipo);
 
 		})).setHeader("Eliminar");;
 		
 		grid.addColumn(new ComponentRenderer<>(Button::new, (editarBoton, equipo) -> {
 
-			//Equipo actor = new Equipo();
-
-			editarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
-					ButtonVariant.LUMO_TERTIARY);
-
-			editarBoton.addClickListener(event -> {
-				equipoSeleccionado = equipo;
-				FormLayout formulario = new FormLayout();
-				TextField nombreField = new TextField("Nombre");
-				nombreField.setValue(equipo.getNombre());
-				formulario.add(nombreField);
-				TextField apellidosField = new TextField("Apellidos");
-				apellidosField.setValue(equipo.getApellidos());
-				formulario.add(apellidosField);
-				IntegerField añoField = new IntegerField("Año de nacimiento");
-				añoField.setValue(equipo.getAnyoNac());
-				formulario.add(añoField);
-				TextField paisField = new TextField("Pais");
-				paisField.setValue(equipo.getPais());
-				formulario.add(paisField);
-				TextField rolField = new TextField("Rol");
-				rolField.setValue(equipo.getRol());
-				formulario.add(rolField);
-
-				Dialog dialogo = new Dialog();
-				dialogo.add(formulario);
-
-				Button guardarBoton = new Button("Guardar");
-				guardarBoton.addClickListener(event2 -> {
-
-					equipoSeleccionado.setNombre(nombreField.getValue());
-					equipoSeleccionado.setApellidos(apellidosField.getValue());
-					equipoSeleccionado.setAnyoNac(añoField.getValue());
-					equipoSeleccionado.setPais(paisField.getValue());
-					equipoSeleccionado.setRol(rolField.getValue());
-					equipoSeleccionado = equipo;
-
-					EquipoDao.modificarEquipo(equipo);
-					grid.getDataProvider().refreshAll();
-					grid.setItems(coleccionEquipo);
-
-					Notification popup = Notification.show("Modificado correctamente");
-					popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-
-					dialogo.close();
-				});
-
-				formulario.add(guardarBoton);
-
-				editarBoton.setEnabled(true);
-
-				dialogo.open();
-			});
-
-			editarBoton.setIcon(new Icon(VaadinIcon.EDIT));
+			modificarForm(editarBoton, equipo);
 
 		})).setHeader("Modificar");
 		
+	}
+
+	private void modificarForm(Button editarBoton, Equipo equipo) {
+		editarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
+				ButtonVariant.LUMO_TERTIARY);
+
+		editarBoton.addClickListener(event -> {
+			equipoSeleccionado = equipo;
+			FormLayout formulario = new FormLayout();
+			TextField nombreField = new TextField("Nombre");
+			nombreField.setValue(equipo.getNombre());
+			formulario.add(nombreField);
+			TextField apellidosField = new TextField("Apellidos");
+			apellidosField.setValue(equipo.getApellidos());
+			formulario.add(apellidosField);
+			IntegerField añoField = new IntegerField("Año de nacimiento");
+			añoField.setValue(equipo.getAnyoNac());
+			formulario.add(añoField);
+			TextField paisField = new TextField("Pais");
+			paisField.setValue(equipo.getPais());
+			formulario.add(paisField);
+			TextField rolField = new TextField("Rol");
+			rolField.setValue(equipo.getRol());
+			formulario.add(rolField);
+
+			Dialog dialogo = new Dialog();
+			dialogo.add(formulario);
+
+			Button guardarBoton = new Button("Guardar");
+			guardarBoton.addClickListener(event2 -> {
+
+				equipoSeleccionado.setNombre(nombreField.getValue());
+				equipoSeleccionado.setApellidos(apellidosField.getValue());
+				equipoSeleccionado.setAnyoNac(añoField.getValue());
+				equipoSeleccionado.setPais(paisField.getValue());
+				equipoSeleccionado.setRol(rolField.getValue());
+				equipoSeleccionado = equipo;
+
+				EquipoDao.modificarEquipo(equipo);
+				grid.getDataProvider().refreshAll();
+				grid.setItems(coleccionEquipo);
+
+				Notification popup = Notification.show("Modificado correctamente");
+				popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+
+				dialogo.close();
+			});
+
+			formulario.add(guardarBoton);
+
+			editarBoton.setEnabled(true);
+
+			dialogo.open();
+		});
+
+		editarBoton.setIcon(new Icon(VaadinIcon.EDIT));
+	}
+
+	private void eliminar(Button eliminarBoton, Equipo equipo) {
+		eliminarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
+				ButtonVariant.LUMO_TERTIARY);
+
+		eliminarBoton.addClickListener(e -> {
+
+			if (equipo != null) {
+				EquipoDao.eliminarEquipo(equipo);
+				UI.getCurrent().getPage().reload();
+
+				Notification popup = Notification.show("Eliminado correctamente");
+				popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+			}
+		});
+
+		eliminarBoton.setIcon(new Icon(VaadinIcon.TRASH));
 	}
 
 	@Override

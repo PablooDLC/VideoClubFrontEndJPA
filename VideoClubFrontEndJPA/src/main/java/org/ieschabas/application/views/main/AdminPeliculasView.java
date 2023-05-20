@@ -1,6 +1,7 @@
 package org.ieschabas.application.views.main;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,10 @@ import java.util.stream.Collectors;
 
 import javax.annotation.security.RolesAllowed;
 
+import com.vaadin.flow.component.upload.Upload;
+import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
+import com.vaadin.flow.server.StreamResource;
+import org.apache.commons.io.IOUtils;
 import org.ieschabas.clases.Equipo;
 import org.ieschabas.clases.Pelicula;
 import org.ieschabas.daos.EquipoDao;
@@ -48,6 +53,9 @@ public class AdminPeliculasView extends VerticalLayout {
 	String director = "Director";
 	Grid<Pelicula> grid = new Grid<>(Pelicula.class, false);
 	FormLayout formLayout = new FormLayout();
+	Upload imagenUpload;
+	MultiFileMemoryBuffer multiFileMemoryBuffer;
+	byte[] imagenBytes;
 
 	public AdminPeliculasView() {
 
@@ -102,6 +110,21 @@ public class AdminPeliculasView extends VerticalLayout {
 
 		});
 
+		multiFileMemoryBuffer = new MultiFileMemoryBuffer();
+		imagenUpload = new Upload(multiFileMemoryBuffer);
+		imagenUpload.setUploadButton(new Button("Subir portada"));
+		imagenUpload.setAcceptedFileTypes("image/jpg, image/png");
+
+		imagenUpload.addSucceededListener( e -> {
+			try {
+				InputStream imagenInputStream = multiFileMemoryBuffer.getInputStream(e.getFileName());
+				imagenBytes = IOUtils.toByteArray(imagenInputStream);
+			} catch (IOException ex) {
+				throw new RuntimeException(ex);
+			}
+
+		});
+
 		formLayout.setResponsiveSteps(
 				// Use one column by default
 				new ResponsiveStep("0", 1),
@@ -123,6 +146,8 @@ public class AdminPeliculasView extends VerticalLayout {
 			Set<Equipo> directoresSeleccionados = relDirector.getSelectedItems();
 			pelicula.setDirectores(directoresSeleccionados);
 
+			pelicula.setImagenByte(imagenBytes);
+
 			PeliculaDao.guardarPelicula(pelicula);
 
 			Notification popup = Notification.show("Pelicula añadida correctamente");
@@ -137,6 +162,7 @@ public class AdminPeliculasView extends VerticalLayout {
 			valoracionField.clear();
 			relActor.clear();
 			relDirector.clear();
+			imagenUpload.clearFileList();
 
 			grid.getDataProvider().refreshAll();
 			grid.setItems(coleccionPeliculas);
@@ -146,7 +172,7 @@ public class AdminPeliculasView extends VerticalLayout {
 		});
 
 		formLayout.add(tituloField, descripcionField, anyoPublicacionField, duracionField, categoriaField, formatoField,
-				valoracionField, relActor, relDirector, añadir);
+				valoracionField, relActor, relDirector, imagenUpload, añadir);
 	}
 
 	private void iniciarGrid() {
@@ -160,97 +186,122 @@ public class AdminPeliculasView extends VerticalLayout {
 		grid.addColumn(Pelicula::getFormato).setHeader("Formato");
 		grid.addColumn(Pelicula::getCategoria).setHeader("Categoria");
 		grid.addColumn(Pelicula::getValoracion).setHeader("Valoración");
+
 		grid.addColumn(new ComponentRenderer<>(Button::new, (eliminarBoton, pelicula) -> {
 
-			eliminarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
-					ButtonVariant.LUMO_TERTIARY);
-
-			eliminarBoton.addClickListener(e -> {
-
-				if (pelicula != null) {
-					PeliculaDao.eliminarPelicula(pelicula);
-					UI.getCurrent().getPage().reload();
-
-					Notification popup = Notification.show("Pelicula eliminada correctamente");
-					popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-				}
-			});
-
-			eliminarBoton.setIcon(new Icon(VaadinIcon.TRASH));
+			eliminar(eliminarBoton, pelicula);
 
 		})).setHeader("Eliminar");
 
 		grid.addColumn(new ComponentRenderer<>(Button::new, (editarBoton, pelicula) -> {
 
-			editarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
-					ButtonVariant.LUMO_TERTIARY);
-
-			editarBoton.addClickListener(event -> {
-				peliculaSeleccionada = pelicula;
-				FormLayout formulario = new FormLayout();
-				TextField tituloField = new TextField("Título");
-				tituloField.setValue(pelicula.getTitulo());
-				formulario.add(tituloField);
-				TextField descripcionField = new TextField("Descripcion");
-				descripcionField.setValue(pelicula.getDescripcion());
-				formulario.add(descripcionField);
-				IntegerField añoField = new IntegerField("Año de publicacion");
-				añoField.setValue(pelicula.getAñopublicacion());
-				formulario.add(añoField);
-				TextField duracionField = new TextField("Duracion");
-				duracionField.setValue(pelicula.getDuracion());
-				formulario.add(duracionField);
-				Select<Categoria> categoriaField = new Select<>();
-				categoriaField.setLabel("Categoria");
-				categoriaField.setItems(Categoria.values());
-				categoriaField.setValue(pelicula.getCategoria());
-				formulario.add(categoriaField);
-				Select<Formato> formatoField = new Select<>();
-				formatoField.setLabel("Formato");
-				formatoField.setItems(Formato.values());
-				formatoField.setValue(pelicula.getFormato());
-				formulario.add(formatoField);
-				Select<Valoracion> valoracionField = new Select<>();
-				valoracionField.setLabel("Valoracion");
-				valoracionField.setItems(Valoracion.values());
-				valoracionField.setValue(pelicula.getValoracion());
-				formulario.add(valoracionField);
-
-				Dialog dialogo = new Dialog();
-				dialogo.add(formulario);
-
-				Button guardarBoton = new Button("Guardar");
-				guardarBoton.addClickListener(event2 -> {
-
-					peliculaSeleccionada.setTitulo(tituloField.getValue());
-					peliculaSeleccionada.setDescripcion(descripcionField.getValue());
-					peliculaSeleccionada.setAñopublicacion(añoField.getValue());
-					peliculaSeleccionada.setDuracion(duracionField.getValue());
-					peliculaSeleccionada.setCategoria(categoriaField.getValue());
-					peliculaSeleccionada.setFormato(formatoField.getValue());
-					peliculaSeleccionada.setValoracion(valoracionField.getValue());
-					peliculaSeleccionada = pelicula;
-
-					PeliculaDao.modificarPelicula(pelicula);
-					grid.getDataProvider().refreshAll();
-					grid.setItems(coleccionPeliculas);
-
-					Notification popup = Notification.show("Pelicula modificada correctamente");
-					popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-
-					dialogo.close();
-				});
-
-				formulario.add(guardarBoton);
-
-				editarBoton.setEnabled(true);
-
-				dialogo.open();
-			});
-
-			editarBoton.setIcon(new Icon(VaadinIcon.EDIT));
+			modificarForm(editarBoton, pelicula);
 
 		})).setHeader("Modificar");
+	}
+
+	private void eliminar(Button eliminarBoton, Pelicula pelicula) {
+
+		eliminarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
+				ButtonVariant.LUMO_TERTIARY);
+
+		eliminarBoton.addClickListener(e -> {
+
+			if (pelicula != null) {
+				PeliculaDao.eliminarPelicula(pelicula);
+				UI.getCurrent().getPage().reload();
+
+				Notification popup = Notification.show("Pelicula eliminada correctamente");
+				popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+			}
+		});
+
+		eliminarBoton.setIcon(new Icon(VaadinIcon.TRASH));
+
+	}
+
+	private void modificarForm(Button editarBoton, Pelicula pelicula) {
+
+		editarBoton.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR,
+				ButtonVariant.LUMO_TERTIARY);
+
+		editarBoton.addClickListener(event -> {
+			peliculaSeleccionada = pelicula;
+			FormLayout formulario = new FormLayout();
+			TextField tituloField = new TextField("Título");
+			tituloField.setValue(pelicula.getTitulo());
+			formulario.add(tituloField);
+			TextField descripcionField = new TextField("Descripcion");
+			descripcionField.setValue(pelicula.getDescripcion());
+			formulario.add(descripcionField);
+			IntegerField añoField = new IntegerField("Año de publicacion");
+			añoField.setValue(pelicula.getAñopublicacion());
+			formulario.add(añoField);
+			TextField duracionField = new TextField("Duracion");
+			duracionField.setValue(pelicula.getDuracion());
+			formulario.add(duracionField);
+			Select<Categoria> categoriaField = new Select<>();
+			categoriaField.setLabel("Categoria");
+			categoriaField.setItems(Categoria.values());
+			categoriaField.setValue(pelicula.getCategoria());
+			formulario.add(categoriaField);
+			Select<Formato> formatoField = new Select<>();
+			formatoField.setLabel("Formato");
+			formatoField.setItems(Formato.values());
+			formatoField.setValue(pelicula.getFormato());
+			formulario.add(formatoField);
+			Select<Valoracion> valoracionField = new Select<>();
+			valoracionField.setLabel("Valoracion");
+			valoracionField.setItems(Valoracion.values());
+			valoracionField.setValue(pelicula.getValoracion());
+			formulario.add(valoracionField);
+
+			/*MultiSelectComboBox<Equipo> relActor = new MultiSelectComboBox<>("Actores");
+			relActor.setValue(pelicula.getActores());
+			formulario.add(relActor);
+
+			MultiSelectComboBox<Equipo> relDirector = new MultiSelectComboBox<>("Directores");
+			relDirector.setValue(pelicula.getDirectores());
+			formulario.add(relDirector);*/
+
+			Dialog dialogo = new Dialog();
+			dialogo.add(formulario);
+
+			Button guardarBoton = new Button("Guardar");
+			guardarBoton.addClickListener(event2 -> {
+
+				peliculaSeleccionada.setTitulo(tituloField.getValue());
+				peliculaSeleccionada.setDescripcion(descripcionField.getValue());
+				peliculaSeleccionada.setAñopublicacion(añoField.getValue());
+				peliculaSeleccionada.setDuracion(duracionField.getValue());
+				peliculaSeleccionada.setCategoria(categoriaField.getValue());
+				peliculaSeleccionada.setFormato(formatoField.getValue());
+				peliculaSeleccionada.setValoracion(valoracionField.getValue());
+				/*Set<Equipo> actoresSeleccionados = relActor.getSelectedItems();
+				peliculaSeleccionada.setActores(actoresSeleccionados);
+				Set<Equipo> directoresSeleccionados = relDirector.getSelectedItems();
+				peliculaSeleccionada.setDirectores(directoresSeleccionados);*/
+				peliculaSeleccionada = pelicula;
+
+				PeliculaDao.modificarPelicula(pelicula);
+				grid.getDataProvider().refreshAll();
+				grid.setItems(coleccionPeliculas);
+
+				Notification popup = Notification.show("Pelicula modificada correctamente");
+				popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+
+				dialogo.close();
+			});
+
+			formulario.add(guardarBoton);
+
+			editarBoton.setEnabled(true);
+
+			dialogo.open();
+		});
+
+		editarBoton.setIcon(new Icon(VaadinIcon.EDIT));
+
 	}
 
 }
