@@ -1,9 +1,8 @@
 package org.ieschabas.application.views.main;
 
-import javax.annotation.security.RolesAllowed;
-
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
@@ -16,22 +15,30 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.StreamResource;
 import org.ieschabas.application.security.SecurityService;
-import org.ieschabas.clases.*;
+import org.ieschabas.clases.Alquiler;
+import org.ieschabas.clases.Pelicula;
+import org.ieschabas.clases.Usuario;
 import org.ieschabas.daos.AlquilerDao;
 import org.ieschabas.daos.PeliculaDao;
 import org.ieschabas.daos.UsuariosDao;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.annotation.security.RolesAllowed;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Vista de cliente que muestra un catálogo de películas y permite alquilar y ver detalles de las películas.
+ * Requiere los roles "ROLE_USER" o "ROLE_ADMIN" para acceder.
+ */
 @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
 @Route("cliente")
 public class ClienteView extends VerticalLayout {
 
+    static Image imagen;
     List<Pelicula> peliculas = new ArrayList<Pelicula>();
     HorizontalLayout layout = new HorizontalLayout();
     Button alquilarBoton;
@@ -39,11 +46,16 @@ public class ClienteView extends VerticalLayout {
     Usuario cliente;
     UserDetails userDetails;
     SecurityService securityService;
-    static Image imagen;
     Button fichaBoton;
     RouterLink link;
     Button logoutButton;
 
+    /**
+     * Inicializa constructor de la clase
+     *
+     * @param securityService
+     * @throws IOException
+     */
     public ClienteView(SecurityService securityService) throws IOException {
         this.securityService = securityService;
 
@@ -55,10 +67,33 @@ public class ClienteView extends VerticalLayout {
 
     }
 
+    /**
+     * Recoge los bytes de la imagen y la muestra
+     *
+     * @param pelicula
+     * @return
+     */
+    public static Image cargarImagen(Pelicula pelicula) {
+
+        imagen = new Image();
+        imagen.setWidth("250px");
+        byte[] imagenBytes = pelicula.getImagenByte();
+        StreamResource resource = new StreamResource("imagen.png", () -> new ByteArrayInputStream(imagenBytes));
+        imagen.setSrc(resource);
+        imagen.getElement().setAttribute("alt", "Imagen");
+
+        return imagen;
+    }
+
+    /**
+     * Inicializa el catalogo y los botones y los agrega a la vista
+     *
+     * @throws IOException
+     */
     private void iniciarLayout() throws IOException {
 
         H1 cabecera = new H1("Catalogo de peliculas");
-        cabecera.getElement().getStyle().set("text-align", "center").set("color", "blue");
+        cabecera.getElement().getStyle().set("justify-content", "center").set("color", "blue").set("font-size", "40px");
 
         logoutButton = new Button("", event -> {
             UI.getCurrent().getPage().executeJs("location.href = '/login'");
@@ -73,11 +108,10 @@ public class ClienteView extends VerticalLayout {
             cargarImagen(pelicula);
 
             VerticalLayout contenedorP = new VerticalLayout();
-            contenedorP.getElement().getStyle().set("width", "35%");
-            //contenedorP.add(pelicula.getTitulo() + "\n");
+            contenedorP.getElement().getStyle().set("width", "32%");
             contenedorP.add(imagen);
-            contenedorP.add("Categoria: " + pelicula.getCategoria() + "\n"
-                    + "Valoracion: " + pelicula.getValoracion().toString());
+            contenedorP.add("Categoria: " + pelicula.getCategoria() + " ");
+            contenedorP.add("Valoracion: " + pelicula.getValoracion());
 
             alquilarBoton = new Button("Alquilar");
 
@@ -92,26 +126,17 @@ public class ClienteView extends VerticalLayout {
 
             });
 
-                link = new RouterLink();
-                link.add(new Span("Ver ficha"));
-                link.setRoute(FichaPeliculaView.class, pelicula.getTitulo());
-                link.setTabIndex(-1);
+            link = new RouterLink();
+            link.add(new Span("Ver ficha"));
+            link.setRoute(FichaPeliculaView.class, pelicula.getTitulo());
+            link.setTabIndex(-1);
 
-            layout.add(contenedorP, link, alquilarBoton);
+            contenedorP.add(alquilarBoton);
+            contenedorP.add(link);
+
+            layout.add(contenedorP);
         }
 
         add(cabecera, logoutButton, layout);
-    }
-
-    public static Image cargarImagen(Pelicula pelicula) {
-
-        imagen = new Image();
-        imagen.setWidth("250px");
-        byte[] imagenBytes = pelicula.getImagenByte();
-        StreamResource resource = new StreamResource("imagen.png", () -> new ByteArrayInputStream(imagenBytes));
-        imagen.setSrc(resource);
-        imagen.getElement().setAttribute("alt", "Imagen");
-
-        return imagen;
     }
 }

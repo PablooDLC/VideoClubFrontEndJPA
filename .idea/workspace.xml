@@ -4,7 +4,80 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7261c0c-83b7-4171-be1a-9435ab57567f" name="Changes" comment="Boton alquilar hecho" />
+    <list default="true" id="f7261c0c-83b7-4171-be1a-9435ab57567f" name="Changes" comment="ClienteView hecho, ficha casi hecha falta estilo, Falta la modificacion de relaciones pelicula/equipo, y cargar los actores y directores a la ficha">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/allclasses-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/allpackages-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/Application.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/class-use/Application.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/AdminViewActores.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/AdminViewDirectores.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/AdminViewPeliculas.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/AñadirActorView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/AñadirDirectorView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/AñadirPeliculaView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/ListadoActoresView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/ListadoDirectoresView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/ListadoPeliculasView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/MainView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/AdminViewActores.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/AdminViewDirectores.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/AdminViewPeliculas.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/AñadirActorView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/AñadirDirectorView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/AñadirPeliculaView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/ListadoActoresView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/ListadoDirectoresView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/ListadoPeliculasView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/class-use/MainView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/com/example/application/views/main/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/element-list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/help-doc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/index-files/index-1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/index-files/index-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/index-files/index-3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/index-files/index-4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/jquery-ui.overrides.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/legal/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/legal/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/legal/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/legal/jquery.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/legal/jqueryUI.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/member-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/module-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/overview-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/overview-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/package-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/resources/glass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/resources/x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/script-dir/jquery-3.6.0.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/script-dir/jquery-ui.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/script-dir/jquery-ui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/serialized-form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/tag-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/doc/type-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/logs/eventos.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/security/SecurityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/security/SecurityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminAlquileresView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminAlquileresView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminEquipoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminEquipoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminPeliculasView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminPeliculasView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/AdminView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/ClienteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/ClienteView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/FichaPeliculaView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/FichaPeliculaView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoClubFrontEndJPA/src/main/java/org/ieschabas/application/views/main/MainView.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684260599160</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ClienteView hecho, ficha casi hecha falta estilo, Falta la modificacion de relaciones pelicula/equipo, y cargar los actores y directores a la ficha">
+      <created>1684576429124</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1684576429124</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -114,6 +194,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Actualizacion de todas las vistas&#10;Login hecho" />
     <MESSAGE value="Boton alquilar hecho" />
-    <option name="LAST_COMMIT_MESSAGE" value="Boton alquilar hecho" />
+    <MESSAGE value="ClienteView hecho, ficha casi hecha falta estilo, Falta la modificacion de relaciones pelicula/equipo, y cargar los actores y directores a la ficha" />
+    <option name="LAST_COMMIT_MESSAGE" value="ClienteView hecho, ficha casi hecha falta estilo, Falta la modificacion de relaciones pelicula/equipo, y cargar los actores y directores a la ficha" />
   </component>
 </project>
